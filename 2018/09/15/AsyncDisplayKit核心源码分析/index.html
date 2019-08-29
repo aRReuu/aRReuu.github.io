@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+
+    
+
+    
+        <meta name="description" content="AsyncDisplayKit（ASDK）已经问世了几年，其主要作用是将iOS上耗时的CPU操作和GPU渲染都搬到后台进行，以提高UI界面的流畅性，同时更好地提升用户交互体验。下面将通过ASDK的源码进行分析，这个框架是如何实现保持界面流畅性的。">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="aReu">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="AsyncDisplayKit核心源码分析">
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="AsyncDisplayKit（ASDK）已经问世了几年，其主要作用是将iOS上耗时的CPU操作和GPU渲染都搬到后台进行，以提高UI界面的流畅性，同时更好地提升用户交互体验。下面将通过ASDK的源码进行分析，这个框架是如何实现保持界面流畅性的。">
+    
+
+    <!--Open Graph Site Name-->
+        <meta property="og:site_name" content="Freiheit als Autonomie">
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article">
+    
+
+    <!--Page Cover-->
+    
+    
+        <meta property="og:image" content="http://yoursite.com/img/home-bg.jpg">
+    
+
+        <meta name="twitter:card" content="summary_large_image">
+
+    
+
+    
+        <meta name="twitter:image" content="http://yoursite.com/img/home-bg.jpg">
+    
+
+    <!-- Title -->
+    
+    <title>AsyncDisplayKit核心源码分析 - Freiheit als Autonomie</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">aReuHub</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                主页
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                标签
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                分类
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/aReuuuuu">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>AsyncDisplayKit核心源码分析</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2018-09-15
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/iOS/">#iOS</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/iOS/">iOS</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <p>在ASDK中，所有视图控件的基类都是 <code>ASDisplayNode</code>,它是对 <code>UIView</code> 和 <code>CALayer</code> 的抽象，并且允许你对视图进行计算主线程的层次结构，也可以渲染主线程。而最重要的是，这个类是<strong>线程安全</strong>的。当创建一个ASDisplayNode并且添加到当前视图后，view/layer的get方法总是先被调用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - Misc Setter / Getter</span><br><span class="line">- (UIView *)view&#123;</span><br><span class="line">  ...</span><br><span class="line">  if (!_view) &#123;</span><br><span class="line">    [self _loadViewOrLayerIsLayerBacked:NO];</span><br><span class="line">  &#125;</span><br><span class="line">  return _view;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (CALayer *)layer&#123;</span><br><span class="line">  if (!_layer) &#123;</span><br><span class="line">	...</span><br><span class="line">    [self _loadViewOrLayerIsLayerBacked:YES];</span><br><span class="line">  &#125;</span><br><span class="line">  return _layer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而它们都会分别调用到<code>- (void)_loadViewOrLayerIsLayerBacked:(BOOL)isLayerBacked</code>这个方法，其中<code>isLayerBacked</code>表示<strong>层处理</strong>，当其值为true时，会放弃对当前View的创建，从而优化性能，节省不必要的渲染时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">- (void)_loadViewOrLayerIsLayerBacked:(BOOL)isLayerBacked&#123;</span><br><span class="line">  if (isLayerBacked) &#123;</span><br><span class="line">    TIME_SCOPED(_debugTimeToCreateView);</span><br><span class="line">    _layer = [self _layerToLoad];</span><br><span class="line">    static int ASLayerDelegateAssociationKey;</span><br><span class="line">    ASWeakProxy *instance = [ASWeakProxy weakProxyWithTarget:self];</span><br><span class="line">    _layer.delegate = (id&amp;amp;lt;CALayerDelegate&amp;amp;gt;)instance;</span><br><span class="line">    objc_setAssociatedObject(_layer, &amp;amp;amp;ASLayerDelegateAssociationKey, instance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">    TIME_SCOPED(_debugTimeToCreateView);</span><br><span class="line">    _view = [self _viewToLoad];</span><br><span class="line">    _view.asyncdisplaykit_node = self;</span><br><span class="line">    _layer = _view.layer;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  _layer.asyncdisplaykit_node = self;</span><br><span class="line">  self.asyncLayer.asyncDelegate = self;</span><br><span class="line">  </span><br><span class="line">  &#123;</span><br><span class="line">    TIME_SCOPED(_debugTimeToApplyPendingState);</span><br><span class="line">    [self _applyPendingStateToViewOrLayer];</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#123;</span><br><span class="line">    TIME_SCOPED(_debugTimeToAddSubnodeViews);</span><br><span class="line">    [self _addSubnodeViewsAndLayers];</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#123;</span><br><span class="line">    TIME_SCOPED(_debugTimeForDidLoad);</span><br><span class="line">    [self __didLoad];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从<code>self.asyncLayer.asyncDelegate = self;</code>可以见到<code>ASDisplayNode</code>成为了<code>_ASDisplayLayer</code>的代理，以管理CALayer的操作。其后，方法内部的<code>_applyPendingStateToViewOrLayer</code>会让layer执行<code>setNeedsDisplay</code>并且标记自身，进行内容的绘制操作。最后在<code>_ASDisplayLayer</code>中实现display方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)display&#123;</span><br><span class="line">  ...</span><br><span class="line">  [self display:self.displaysAsynchronously];</span><br><span class="line">     ...</span><br><span class="line">     [strongAsyncDelegate displayAsyncLayer:self asynchronously:asynchronously];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来也就是最<strong>核心和关键</strong>的部分。所有的优化操作都会在<code>displayAsyncLayer</code>这个方法中实现，其中分为以下三部分：</p>
+<ul>
+<li>任务<strong>displayBlock</strong>的构建（其中包括视图绘制，<strong>rasterize光栅化</strong>处理）</li>
+<li>管理绘制事务，由三个部分组成，分别是<code>_ASAsyncTransactionGroup</code>、<code>_ASAsyncTransactionContainer</code> 以及 <code>_ASAsyncTransaction</code></li>
+<li>GCD异步并发调度任务</li>
+</ul>
+<p>我们先来看一下精简之后的源码，并分别对内部操作进行一一分析：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- (void)displayAsyncLayer:(_ASDisplayLayer *)asyncLayer asynchronously:(BOOL)asynchronously&#123;</span><br><span class="line">	...</span><br><span class="line">    asyncdisplaykit_async_transaction_operation_block_t displayBlock = [self _displayBlockWithAsynchronous:asynchronously isCancelledBlock:isCancelledBlock rasterizing:NO];</span><br><span class="line">    // 再绘制执行完成后进行block回调操作，当前回调在主线程上进行</span><br><span class="line"> asyncdisplaykit_async_transaction_operation_completion_block_t completionBlock = ^(id&amp;amp;lt;NSObject&amp;amp;gt; value, BOOL canceled)&#123;</span><br><span class="line">        if (!canceled &amp;amp;amp;&amp;amp;amp; !isCancelledBlock()) &#123;</span><br><span class="line">		...</span><br><span class="line">            if (stretchable) &#123; ASDisplayNodeSetupLayerContentsWithResizableImage(_layer, image);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">			//填充绘制后的视图内容</span><br><span class="line">                _layer.contentsScale = self.contentsScale;</span><br><span class="line">                _layer.contents = (id)image.CGImage;</span><br><span class="line">            &#125;</span><br><span class="line">			...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    if (asynchronously) &#123;</span><br><span class="line">        _ASAsyncTransaction *transaction = containerLayer.asyncdisplaykit_asyncTransaction;</span><br><span class="line">        //将displayBlock以及completion放进添加到事务上，通过GCD异步并发调度所有绘制任务</span><br><span class="line">        [transaction addOperationWithBlock:displayBlock priority:self.drawingPriority queue:[_ASDisplayLayer displayQueue] completion:completionBlock];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        UIImage *contents = (UIImage *)displayBlock();</span><br><span class="line">        completionBlock(contents, NO);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>1.<strong>任务displayBlock的构建</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asyncdisplaykit_async_transaction_operation_block_t displayBlock = [self _displayBlockWithAsynchronous:asynchronously isCancelledBlock:isCancelledBlock rasterizing:NO];</span><br></pre></td></tr></table></figure>
+
+<p>这里构建了<code>asyncdisplaykit_async_transaction_operation_block_t</code>类型的displayBlock，是一个用以在委托上调用绘制并返回视图内容进行显示的模块封装，其内部为<strong>光栅化</strong>以及<strong>内容绘制</strong>的实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">if (shouldBeginRasterizing) &#123;</span><br><span class="line">    //递归子视图进行光栅化操作</span><br><span class="line">    [self _recursivelyRasterizeSelfAndSublayersWithIsCancelledBlock:isCancelledBlock displayBlocks:displayBlocks];</span><br><span class="line">&#125;</span><br><span class="line">	...</span><br><span class="line">    //构建displayBlock绘制操作</span><br><span class="line">	displayBlock = ^id&#123;</span><br><span class="line">      CHECK_CANCELLED_AND_RETURN_NIL();</span><br><span class="line">      UIGraphicsBeginImageContextWithOptions(bounds.size, opaque, contentsScaleForDisplay);</span><br><span class="line">		...</span><br><span class="line">      for (dispatch_block_t block in displayBlocks) &#123;</span><br><span class="line">        block();</span><br><span class="line">      &#125;</span><br><span class="line">	  ...</span><br><span class="line">      UIImage *image = UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">      UIGraphicsEndImageContext();</span><br><span class="line">      ASDN_DELAY_FOR_DISPLAY();</span><br><span class="line">      return image;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>代码继续往下走，其中当判断<code>asynchronously</code>为false时，当前封装好的绘制任务<code>displayBlock</code>将会被同步执行，然后执行<code>completionBlock</code>回调，更新layer所显示的内容。否则的话，block会被封装成一个事务，添加到队列中执行，再执行异步绘制操作。</p>
+<p>2.<strong>建立管理绘制事务</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">_ASAsyncTransaction *transaction = containerLayer.asyncdisplaykit_asyncTransaction;</span><br><span class="line">//实现</span><br><span class="line">- (_ASAsyncTransaction *)asyncdisplaykit_asyncTransaction&#123;</span><br><span class="line">	...</span><br><span class="line">    if (transaction == nil) &#123;</span><br><span class="line">        NSHashTable *transactions = self.asyncdisplaykit_asyncLayerTransactions;</span><br><span class="line">        if (transactions == nil) &#123;</span><br><span class="line">            transactions = [NSHashTable hashTableWithOptions:NSPointerFunctionsObjectPointerPersonality];</span><br><span class="line">            self.asyncdisplaykit_asyncLayerTransactions = transactions;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">        [transactions addObject:transaction];</span><br><span class="line">        self.asyncdisplaykit_currentAsyncTransaction = transaction;</span><br><span class="line">    &#125;</span><br><span class="line">    [[_ASAsyncTransactionGroup mainTransactionGroup] addTransactionContainer:self];</span><br><span class="line">    return transaction;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于上述语句，创建了transaction任务并且添加到<code>_ASAsyncTransactionGroup</code>中进行管理，<code>_ASAsyncTransactionGroup</code> 会在初始化时，创建了，向 Runloop 中注册监听事件，当Runloop 在将要进入休眠与结束期间，提交 displayBlock执行的结果。</p>
+<p>3.<strong>异步并发地派发绘制事务并马上执行内容绘制</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[transaction addOperationWithBlock:displayBlock priority:self.drawingPriority queue:[_ASDisplayLayer displayQueue] completion:completionBlock];</span><br></pre></td></tr></table></figure>
+
+<p>首先<code>[_ASDisplayLayer displayQueue]</code>队列的优先级别为<code>DISPATCH_QUEUE_PRIORITY_HIGH</code>,也就是说为了<strong>优先处理好UI渲染</strong>过程。期间内部进行如下处理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ASDisplayNodeAsyncTransactionOperation *operation = [[ASDisplayNodeAsyncTransactionOperation alloc] initWithOperationCompletionBlock:completion];</span><br><span class="line"> [_operations addObject:operation];</span><br><span class="line"> _group-&amp;amp;gt;schedule(priority, queue, ^&#123;</span><br><span class="line">   @autoreleasepool &#123;</span><br><span class="line">     operation.value = block();</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>schedule</code>方法采取C++形式对GCD进行了封装,同时添加一些最大并发数、线程锁的功能，最后执行<code>operation._block();</code>操作，回调处理<code>operation.value = block();</code>将<code>displayBlock</code>的绘制任务实现并赋值给<code>ASDisplayNodeAsyncTransactionOperation</code>的实例<code>operation.value</code>.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void ASAsyncTransactionQueue::GroupImpl::schedule(NSInteger priority, dispatch_queue_t queue, dispatch_block_t block)&#123;</span><br><span class="line">	dispatch_async(queue, ^&#123;</span><br><span class="line">     ...</span><br><span class="line">      while (!entry._operationQueue.empty()) &#123;</span><br><span class="line">        ...</span><br><span class="line">        if (operation._block) &#123;</span><br><span class="line">          ASProfilingSignpostStart(3, operation._block);</span><br><span class="line">          operation._block();</span><br><span class="line">          ASProfilingSignpostEnd(3, operation._block);</span><br><span class="line">        &#125;</span><br><span class="line">        operation._group-&amp;amp;gt;leave();</span><br><span class="line">        operation._block = nil; // the block must be freed while mutex is unlocked</span><br><span class="line">        lock.lock();</span><br><span class="line">      &#125;</span><br><span class="line">	  ...</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个时候，虽然异步处理视图操作已经实现，但是并没有马上显示在界面上。而是当Runloop 在将要进入休眠与结束期间，已经注册了回调的管理事务类<code>_ASAsyncTransactionGroup</code>将会接收到通知，对每个<code>_ASAsyncTransaction</code>事务进行<code>commit</code>提交操作，把封装了的displayBlock回传，实现<code>completionBlock()</code>,使layer获取到绘制内容并呈现到显示屏上。下面将会用调用栈进行解释：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-[_transactionGroupRunLoopObserverCallback]</span><br><span class="line">	-[_ASAsyncTransactionGroup commit]</span><br><span class="line"> 		-[_ASAsyncTransaction commit]</span><br><span class="line"> 		-[_ASAsyncTransaction completeTransaction]</span><br><span class="line">			-[ASAsyncTransactionOperation callAndReleaseCompletionBlock]</span><br><span class="line">				_operationCompletionBlock(self.value, canceled);</span><br></pre></td></tr></table></figure>
+
+<p>最后，当异步绘制任务完成后，block会在<strong>主线程</strong>中回调到<code>- (void)displayAsyncLayer:(_ASDisplayLayer *)asyncLayer asynchronously:(BOOL)asynchronously</code>方法里的<code>completionBlock</code>实现中，并将内容复制给<code>_layer</code>的<code>contents</code>属性。至此，ASDK的整个绘制视图并显示的界面上的过程就结束了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">asyncdisplaykit_async_transaction_operation_completion_block_t completionBlock = ^(id&amp;amp;lt;NSObject&amp;amp;gt; value, BOOL canceled)&#123;</span><br><span class="line">    ASDisplayNodeCAssertMainThread();</span><br><span class="line">    if (!canceled &amp;amp;amp;&amp;amp;amp; !isCancelledBlock()) &#123;</span><br><span class="line">      UIImage *image = (UIImage *)value;</span><br><span class="line">      BOOL stretchable = (NO == UIEdgeInsetsEqualToEdgeInsets(image.capInsets, UIEdgeInsetsZero));</span><br><span class="line">      if (stretchable) &#123; ASDisplayNodeSetupLayerContentsWithResizableImage(_layer, image);</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        _layer.contentsScale = self.contentsScale;</span><br><span class="line">        _layer.contents = (id)image.CGImage;</span><br><span class="line">      &#125;</span><br><span class="line">      [self didDisplayAsyncLayer:self.asyncLayer];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>####总结<br>AsyncDisplayKit为了保持界面流畅性，整个过程做了三大部分的处理：<br>1.利用<strong>UIGraphics实现视图绘制</strong>以及进行<strong>rasterize光栅化处理</strong>，并且将实现封装在<strong>displayBlock</strong>块中。<br>2.建立绘制事务的<strong>管理</strong>，对需要处理的<strong>displayBlock</strong>进行容器封装，涉及到的类分别是<code>_ASAsyncTransactionGroup</code>、<code>_ASAsyncTransactionContainer</code> 以及 <code>_ASAsyncTransaction</code>。期间<code>_ASAsyncTransactionGroup</code>注册Runloop监听事件，并且在每一次Runloop将要进入休眠及结束时<strong>commit</strong>已绘制完成的任务，让<strong>_layer</strong>视图进行完成赋值并更新的操作。<br>3.利用GCD异步并发调用所有绘制事务，从而减轻主线程负担。</p>
+<p><strong>引用</strong><br>[《iOS 保持界面流畅的技巧》](<a href="https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/#43" target="_blank" rel="noopener">https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/#43</a> &amp;quot;iOS 保持界面流畅的技巧&amp;quot;)<br>[提升界面渲染性能](<a href="https://zhuanlan.zhihu.com/p/22255533?refer=iOS-Source-Code" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/22255533?refer=iOS-Source-Code</a> &amp;quot;提升界面渲染性能&amp;quot;)</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-2 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+
+                    
+                        <li>
+                            <a href="https://github.com/aReuuuuu" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+                <!-- </ul> -->
+                <p class="copyright text-muted">&copy; 2019 aReu<br></p>
+                <p class="copyright text-muted">aReuHub 2018. Powered By aReuChen</p>
+                <!-- <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p> --> 
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+
+    
+
+    
+        <meta name="description" content="其实不仅iOS，就连安卓等移动设备在对UI开发的过程都有着一致的目标：更新UI的时候必须在主线程上，甚至准确点来说是“不允许在主线程上有耗时操作，并且UI的更新必须在当前主线程上”。下面将从几个点进行解释。">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="aReu">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="主线程更新UI">
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="其实不仅iOS，就连安卓等移动设备在对UI开发的过程都有着一致的目标：更新UI的时候必须在主线程上，甚至准确点来说是“不允许在主线程上有耗时操作，并且UI的更新必须在当前主线程上”。下面将从几个点进行解释。">
+    
+
+    <!--Open Graph Site Name-->
+        <meta property="og:site_name" content="Freiheit als Autonomie">
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article">
+    
+
+    <!--Page Cover-->
+    
+    
+        <meta property="og:image" content="http://yoursite.com/img/home-bg.jpg">
+    
+
+        <meta name="twitter:card" content="summary_large_image">
+
+    
+
+    
+        <meta name="twitter:image" content="http://yoursite.com/img/home-bg.jpg">
+    
+
+    <!-- Title -->
+    
+    <title>主线程更新UI - Freiheit als Autonomie</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">aReuHub</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                主页
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                标签
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                分类
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/aReuuuuu">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>主线程更新UI</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2018-09-02
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/iOS-线程/">#iOS 线程</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/iOS/">iOS</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h5 id="1-UIApplication所处线程"><a href="#1-UIApplication所处线程" class="headerlink" title="1. UIApplication所处线程"></a>1. UIApplication所处线程</h5><p>在 Cocoa Touch,  UIApplication是在主线程上创建的，另外也包括视图控制器及其viewDidLoad等方法的使用，也是处于主线程之中。</p>
+<h5 id="2-图形渲染：图形管道最终是同步的"><a href="#2-图形渲染：图形管道最终是同步的" class="headerlink" title="2. 图形渲染：图形管道最终是同步的"></a>2. 图形渲染：图形管道最终是同步的</h5><p>&lt;blockquote&gt;<br><em>引用ibireme原话：<br>在 VSync 信号到来后，系统图形服务会通过 CADisplayLink 等机制通知 App，App 主线程开始在 CPU 中计算显示内容，比如视图的创建、布局计算、图片解码、文本绘制等。随后 CPU 会将计算好的内容提交到 GPU 去，由 GPU 进行变换、合成、渲染。随后 GPU 会把渲染结果提交到帧缓冲区去，等待下一次 VSync 信号到来时显示到屏幕上。</em><br>&lt;/blockquote&gt; </p>
+<h5 id="3-UIKit线程不安全-而苹果的-官方文档-https-developer-apple-com-documentation-code-diagnostics-main-thread-checker-quot-官方文档-quot-也有对应的描述"><a href="#3-UIKit线程不安全-而苹果的-官方文档-https-developer-apple-com-documentation-code-diagnostics-main-thread-checker-quot-官方文档-quot-也有对应的描述" class="headerlink" title="3. UIKit线程不安全  而苹果的[官方文档](https://developer.apple.com/documentation/code_diagnostics/main_thread_checker &quot;官方文档&quot;)也有对应的描述:"></a>3. UIKit线程不安全  而苹果的[官方文档](<a href="https://developer.apple.com/documentation/code_diagnostics/main_thread_checker" target="_blank" rel="noopener">https://developer.apple.com/documentation/code_diagnostics/main_thread_checker</a> &quot;官方文档&quot;)也有对应的描述:</h5><p><em>Overview<br>The Main Thread Checker is a standalone tool for Swift and C languages that detects invalid usage of AppKit, UIKit, and other APIs on a background thread. *</em>Updating UI on a thread other than the main thread is a common mistake that can result in missed UI updates, visual defects, data corruptions, and crashes.***</p>
+<p>当然,仅仅是这样解释的话明显是不够说服力的,下面我们用代码进行证明:</p>
+<ul>
+<li>在主/子线程分别对tableView调用reloadData刷新若干cell的数据,并且在tableView下重写layoutSubviews方法:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">- (void)btnClicked</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&amp;quot;主线程开始调用&amp;quot;);</span><br><span class="line">    [self.tableView reloadData];</span><br><span class="line">    //    [self performSelector:@selector(addTF:) withObject:@&amp;quot;1&amp;quot; afterDelay:3.0f];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)btnClicked1</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&amp;quot;子线程开始调用&amp;quot;);</span><br><span class="line">    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^&#123;</span><br><span class="line">        [self.tableView reloadData];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//customTableView</span><br><span class="line">- (void)layoutSubviews</span><br><span class="line">&#123;</span><br><span class="line">    [super layoutSubviews];</span><br><span class="line">    NSLog(@&amp;quot;刷新完成&amp;quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试结果如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//主线程</span><br><span class="line">17:52:40.481302 主线程开始调用</span><br><span class="line">17:52:40.487670 刷新完成</span><br><span class="line">//子线程</span><br><span class="line">17:53:18.788251 子线程开始调用</span><br><span class="line">17:53:24.306246 刷新完成</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>除了刷新cell数据,我们进一步在主/子线程进行视图绘制操作,先重写- drawRect函数,并绘制一条不规则曲线(代码省略)结果如下:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//主线程</span><br><span class="line">2018-09-19 18:25:48.537847 主线程开始调用</span><br><span class="line">2018-09-19 18:25:48.538767 视图加载完成</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//子线程</span><br><span class="line">2018-09-19 18:25:50. 子线程开始调用</span><br><span class="line">2018-09-19 18:25:56. 视图加载完成</span><br></pre></td></tr></table></figure>
+
+<p>可见子线程上进行UI更新的操作并不能马上生效,略有延迟.这里也涉及到Runloop机制的原因.当改变了 Frame、更新了 UIView/CALayer 的层次时,或者手动调用了 UIView/CALayer 的 setNeedsLayout/setNeedsDisplay方法后,这个 UIView/CALayer 就被标记为待处理,并被提交到一个全局的容器去.而苹果注册了一个 Observer 监听 BeforeWaiting(即将进入休眠) 和 Exit (即将退出Loop) 事件,回调去执行如下函数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()</span><br></pre></td></tr></table></figure>
+
+<p>期间会遍历所有待处理的 UIView/CAlayer 以执行实际的绘制和调整，并更新 UI 界面.但是对于在子线程而言,runloop是默认不开启的,因此子线程上刷新UI的方法不能马上被调用,从而没有及时看到UI界面的更新效果.<br>其调用栈大过程如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">_ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv()</span><br><span class="line">    QuartzCore:CA::Transaction::observer_callback:</span><br><span class="line">        CA::Transaction::commit();</span><br><span class="line">            CA::Context::commit_transaction();</span><br><span class="line">                CA::Layer::layout_and_display_if_needed();</span><br><span class="line">                    CA::Layer::layout_if_needed();</span><br><span class="line">                        [CALayer layoutSublayers];</span><br><span class="line">                            [UIView layoutSubviews];</span><br><span class="line">                    CA::Layer::display_if_needed();</span><br><span class="line">                        [CALayer display];</span><br><span class="line">                            [UIView drawRect];</span><br></pre></td></tr></table></figure>
+
+<p>因此,对于UI界面的操作,必须在主线程上进行更新.因为我们无法保证对于子线程上操作UI所带来的诸如及时更新或是线程安全等问题,另外对于用户体验至上的时代,这也是尤为重要.</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p> 是否只要在主线程上进行UI更新就一定是安全呢?</p>
+<p>参考资料:<br>[深入理解RunLoop](<a href="https://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">https://blog.ibireme.com/2015/05/18/runloop/</a> &quot;深入理解RunLoop&quot;)</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-2 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+
+                    
+                        <li>
+                            <a href="https://github.com/aReuuuuu" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+                <!-- </ul> -->
+                <p class="copyright text-muted">&copy; 2019 aReu<br></p>
+                <p class="copyright text-muted">aReuHub 2018. Powered By aReuChen</p>
+                <!-- <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p> --> 
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

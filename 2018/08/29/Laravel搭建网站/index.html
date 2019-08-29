@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--Description-->
+
+    
+
+    
+        <meta name="description" content="本文主要记录了一个基于Laravel框架并使用阿里云服务器从0搭建个人博客的过程">
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="aReu">
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Laravel搭建个人博客">
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="本文主要记录了一个基于Laravel框架并使用阿里云服务器从0搭建个人博客的过程">
+    
+
+    <!--Open Graph Site Name-->
+        <meta property="og:site_name" content="Freiheit als Autonomie">
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article">
+    
+
+    <!--Page Cover-->
+    
+    
+        <meta property="og:image" content="http://yoursite.com/img/home-bg.jpg">
+    
+
+        <meta name="twitter:card" content="summary_large_image">
+
+    
+
+    
+        <meta name="twitter:image" content="http://yoursite.com/img/home-bg.jpg">
+    
+
+    <!-- Title -->
+    
+    <title>Laravel搭建个人博客 - Freiheit als Autonomie</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+
+</head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">aReuHub</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                主页
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                归档
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                标签
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                分类
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="https://github.com/aReuuuuu">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Laravel搭建个人博客</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2018-08-29
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/Laravel-Blog/">#Laravel  Blog</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/Laravel/">Laravel</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。"><a href="#本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。" class="headerlink" title="本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。"></a>本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。</h2><p>###环境部署</p>
+<ul>
+<li>在阿里云的管理控制台，先在安全组规则内设置常用的80以及(SQL)3306端口为允许状态（因为我申请的的是ECS专有网络，所以网卡类型只有内网），其他如443等端口有需要的可以自行设置。</li>
+<li>安装基本软件，以及必要的PHP，MySQL以及Nginx组件。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line"><span class="comment">//语言包</span></span><br><span class="line">sudo apt-get install -y language-pack-en-base   </span><br><span class="line">locale-gen en_US.UTF<span class="number">-8</span></span><br><span class="line"><span class="comment">//常用软件</span></span><br><span class="line">sudo apt-get install -y vim git zip unzip</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>PHP7</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y software-properties-common</span><br><span class="line">sudo LC_ALL=en_US.UTF<span class="number">-8</span> add-apt-repository ppa:ondrej/php</span><br><span class="line">sudo apt-get update</span><br><span class="line">apt-cache search php7<span class="number">.1</span></span><br><span class="line">sudo apt-get install -y php7<span class="number">.1</span></span><br><span class="line">sudo apt-get install -y php7<span class="number">.1</span>-mysql</span><br><span class="line">sudo apt-get install -y php7<span class="number">.1</span>-fpm</span><br><span class="line">sudo apt-get install -y php7<span class="number">.1</span>-curl php7<span class="number">.1</span>-xml php7<span class="number">.1</span>-mcrypt php7<span class="number">.1</span>-json php7<span class="number">.1</span>-gd php7<span class="number">.1</span>-mbstring</span><br></pre></td></tr></table></figure>
+
+<p>MySQL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//完成后会提示设置密码</span><br><span class="line"> sudo apt-get install -y mysql-server</span><br></pre></td></tr></table></figure>
+
+<pre><code>Nginx，如果没有apache的跳过一下步骤</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo service apache2 stop   //停止apache2   </span><br><span class="line">sudo apt-get --purge remove apache2     //卸载</span><br><span class="line">sudo apt-get --purge remove apache2.2-common</span><br><span class="line">sudo apt-get autoremove</span><br><span class="line">sudo apt-get install -y nginx     //安装 nginx</span><br></pre></td></tr></table></figure>
+
+<p>配置PHP以及Nginx</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/php/7.1/fpm/php.ini</span><br><span class="line">//修改 listen = /var/run/php7.1-fpm.sock</span><br><span class="line">sudo vim /etc/php/7.1/fpm/pool.d/www.conf  </span><br><span class="line">//   Nginx的配置按需填写</span><br><span class="line">sudo vim /etc/nginx/sites-available/default  </span><br><span class="line"> server &#123;</span><br><span class="line">        listen 80 default_server;</span><br><span class="line">        listen [::]:80 default_server;</span><br><span class="line">        root /var/www/你的项目名字/public;</span><br><span class="line">        index index.php index.html index.htm;</span><br><span class="line">        server_name 公网IP或域名;</span><br><span class="line">        location / &#123;</span><br><span class="line">            try_files $uri $uri/ /index.php?$query_string;</span><br><span class="line">        &#125;</span><br><span class="line">        location ~ \.php$ &#123;</span><br><span class="line">            try_files $uri /index.php =404;</span><br><span class="line">            fastcgi_split_path_info ^(.+\.php)(/.+)$;</span><br><span class="line">            fastcgi_pass unix:/var/run/php7.1-fpm.sock;</span><br><span class="line">            fastcgi_index index.php;</span><br><span class="line">            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</span><br><span class="line">            include fastcgi_params;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>接下来安装composer，这是目前比较流行的PHP的依赖管理器，详细见连接：[Composer – PHP依赖管理的新时代](<a href="https://link.jianshu.com/?t=http://www.phpcomposer.com/composer-the-new-age-of-dependency-manager-for-php" target="_blank" rel="noopener">https://link.jianshu.com/?t=http://www.phpcomposer.com/composer-the-new-age-of-dependency-manager-for-php</a> &amp;quot;Composer – PHP依赖管理的新时代&amp;quot;)<br>安装完成后把composer.char移动至bin目录下，方便在终端直接调用。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv composer.phar /usr/local/bin/composer</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>这里有两种方法添加Laravel项目到服务器上，首先要进入到 /var/www/文件夹下。第一种方法是创建新的项目，指令如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//xxx项目名字</span><br><span class="line">composer create-project --prefer-dist laravel/laravel xxx</span><br></pre></td></tr></table></figure>
+
+<p>而第二种方法，就是从github仓库端拉取项目代码过来直接使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//xxx为仓库项目的地址</span><br><span class="line">git clone xxxxx</span><br><span class="line">//安装项目依赖</span><br><span class="line">composer install</span><br></pre></td></tr></table></figure>
+
+<p>www/目录下存在项目后，需要修改.env隐藏文件的配置，其中里面包括与数据库MySQL连接，LaravelKey等重要配置，尤其是连接服务器本地数据库的设置，一定要填写正确！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> //文件名字一定为mysql.lock,路径按需填写</span><br><span class="line">DB_SOCKET=/var/run/mysqld/mysql.sock</span><br></pre></td></tr></table></figure>
+
+<p>进行数据迁移以及数据表生成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php artisan migrate</span><br></pre></td></tr></table></figure>
+
+<p>接着是修改文件夹读写权限：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R www-data:www-data /var/www</span><br><span class="line">sudo chmod -R 777 /var/www/laravel-project/storage</span><br></pre></td></tr></table></figure>
+
+<p>基本设置都完成之后，重启Nginx和PHP进程管理器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">service nginx restart</span><br><span class="line">service php7.1-fpm restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>最初以为服务器的部署只是简单几步就能完成，无非就是搭建个环境和安装一些必要组件，其后再把开发好的代码上传上去就OK了（而且网上也不乏类似的教程和文章）。可是随后才发现这两天的进度真的不尽人意，，先是在ubuntu上部署环境的时候配置不正确，导致了要么是SQL连接不通，要么就是Nginx和php页面指向不正确等一大堆问题，不过最后还是成功搞了出来。下一步打算继续完善这个博客的功能，并且以此记录我今后的学习的一点一滴。</p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-2 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+
+                    
+                        <li>
+                            <a href="https://github.com/aReuuuuu" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+                <!-- </ul> -->
+                <p class="copyright text-muted">&copy; 2019 aReu<br></p>
+                <p class="copyright text-muted">aReuHub 2018. Powered By aReuChen</p>
+                <!-- <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p> --> 
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
