@@ -1,218 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
+<html lang=en>
 <head><meta name="generator" content="Hexo 3.9.0">
-
+    <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!--Description-->
-
-    
-
-    
-        <meta name="description" content="响应链理解，模式实现（TODO），Demo附加">
-    
-
-    <!--Author-->
-    
-        <meta name="author" content="aReu">
-    
-
-    <!--Open Graph Title-->
-    
-        <meta property="og:title" content="iOS响应链">
-    
-
-    <!--Open Graph Description-->
-    
-        <meta property="og:description" content="响应链理解，模式实现（TODO），Demo附加">
-    
-
-    <!--Open Graph Site Name-->
-        <meta property="og:site_name" content="Freiheit als Autonomie">
-
-    <!--Type page-->
-    
-        <meta property="og:type" content="article">
-    
-
-    <!--Page Cover-->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="响应链理解，模式实现（TODO），Demo附加">
+<meta name="keywords" content="Responder-CHain  iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS响应链">
+<meta property="og:url" content="http://yoursite.com/2019/09/05/iOS响应链/index.html">
+<meta property="og:site_name" content="Freiheit als Autonomie">
+<meta property="og:description" content="响应链理解，模式实现（TODO），Demo附加">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://github.com/aReuuuuu/blogImage/blob/master/responderChain.jpg">
+<meta property="og:updated_time" content="2019-09-05T09:00:25.450Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS响应链">
+<meta name="twitter:description" content="响应链理解，模式实现（TODO），Demo附加">
+<meta name="twitter:image" content="https://github.com/aReuuuuu/blogImage/blob/master/responderChain.jpg">
     
     
-        <meta property="og:image" content="http://yoursite.com/img/home-bg.jpg">
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
     
-
-        <meta name="twitter:card" content="summary_large_image">
-
-    
-
-    
-        <meta name="twitter:image" content="http://yoursite.com/img/home-bg.jpg">
-    
-
-    <!-- Title -->
-    
-    <title>iOS响应链 - Freiheit als Autonomie</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
+    <!-- title -->
+    <title>iOS响应链</title>
+    <!-- styles -->
     <link rel="stylesheet" href="/css/style.css">
-
-    <!-- Custom Fonts -->
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- Gallery -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet">
-
-    <!-- Google Analytics -->
+    <!-- rss -->
     
-
-
-    <!-- favicon -->
     
-
 </head>
 
-
 <body>
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fa fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="/Search/">Search</a></li>
+         
+          <li><a href="http://github.com/sergodeeva">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2018/10/20/HTTP Header参数/"><i class="fa fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fa fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/09/05/iOS响应链/"><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/09/05/iOS响应链/&text=iOS响应链"><i class="fa fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/09/05/iOS响应链/&title=iOS响应链"><i class="fa fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/09/05/iOS响应链/&is_video=false&description=iOS响应链"><i class="fa fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS响应链&body=Check out this article: http://yoursite.com/2019/09/05/iOS响应链/"><i class="fa fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/09/05/iOS响应链/&title=iOS响应链"><i class="fa fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/09/05/iOS响应链/&title=iOS响应链"><i class="fa fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/09/05/iOS响应链/&title=iOS响应链"><i class="fa fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/09/05/iOS响应链/&title=iOS响应链"><i class="fa fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/09/05/iOS响应链/&name=iOS响应链&description="><i class="fa fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
 
-    <!-- Menu -->
-    <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">aReuHub</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                
-                    <li>
-                        <a href="/">
-                            
-                                主页
-                            
-                        </a>
-                    </li>
-                
-                    <li>
-                        <a href="/archives">
-                            
-                                归档
-                            
-                        </a>
-                    </li>
-                
-                    <li>
-                        <a href="/tags">
-                            
-                                标签
-                            
-                        </a>
-                    </li>
-                
-                    <li>
-                        <a href="/categories">
-                            
-                                分类
-                            
-                        </a>
-                    </li>
-                
-                    <li>
-                        <a href="https://github.com/aReuuuuu">
-                            
-                                <i class="fa fa-github fa-stack-2x"></i>
-                            
-                        </a>
-                    </li>
-                
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
     </div>
-    <!-- /.container -->
-</nav>
-
-    <!-- Main Content -->
-    <!-- Page Header -->
-<!-- Set your background image for this header in your post front-matter: cover -->
-
-<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="post-heading">
-                    <h1>iOS响应链</h1>
-                    
-                    <span class="meta">
-                        <!-- Date and Author -->
-                        
-                        
-                            2019-09-05
-                        
-                    </span>
-                </div>
-            </div>
-        </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-寻找响应者，通过调用以下方法执行"><span class="toc-number">1.</span> <span class="toc-text">1.寻找响应者，通过调用以下方法执行</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-更改控件响应范围（闲鱼底部tabbar）"><span class="toc-number">1.1.</span> <span class="toc-text">1.更改控件响应范围（闲鱼底部tabbar）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-穿透"><span class="toc-number">1.2.</span> <span class="toc-text">2.穿透</span></a></li></ol></li></ol>
     </div>
-</header>
+  </span>
+</div>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-
-            <!-- Tags and categories -->
-           
-                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
-                    
-                        
-
-
-<a href="/tags/Responder-CHain-iOS/">#Responder-CHain  iOS</a>
+    
+    <div class="content index width mx-auto px2 my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        iOS响应链
+    </h1>
 
 
-                    
-                </div>
-                <div class="col-lg-4 col-md-5 post-categories">
-                    
-                        
 
-<a href="/categories/iOS/">iOS</a>
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Freiheit als Autonomie</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-09-05T06:20:44.000Z" itemprop="datePublished">2019-09-05</time>
+    </div>
 
-                    
-                </div>
-            
 
-            <!-- Gallery -->
-            
+      
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Responder-CHain-iOS/">Responder-CHain  iOS</a>
+    </div>
 
-            <!-- Post Main Content -->
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <p>#iOS Responder Chain总结</p>
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>#iOS Responder Chain总结</p>
 <p>###响应链基本概念<br>应用程序使用响应程序（<strong>任何实例UIResponder的类或子类</strong>）对象接收和处理事件,而响应程序的对象的有序集合就形成了响应链。</p>
 <p>###响应者链的传递流程图<br><img src="https://github.com/aReuuuuu/blogImage/blob/master/responderChain.jpg" alt="ResponderChain" title="ResponderChain"></p>
 <p>流程如上，如果普通控件（btn,label,tf）不处理事件，UIKit会将事件发送到其父UIView对象，然后是窗口的根视图。从根视图开始，响应器链在将事件定向到窗口之前转移到拥有的视图控制器。如果窗口无法处理事件，UIKit会将事件传递给UIApplication对象，如果该对象是UIResponder响应者链的实例而不是响应者链的一部分，则可能传递给应用程序委托（delegate）。</p>
@@ -229,69 +157,110 @@
 <h5 id="1-更改控件响应范围（闲鱼底部tabbar）"><a href="#1-更改控件响应范围（闲鱼底部tabbar）" class="headerlink" title="1.更改控件响应范围（闲鱼底部tabbar）"></a>1.更改控件响应范围（闲鱼底部tabbar）</h5><pre><code>TODO 附上demo</code></pre><h5 id="2-穿透"><a href="#2-穿透" class="headerlink" title="2.穿透"></a>2.穿透</h5><p> 直接把子类视图禁止交互或者隐藏，设置透明度少于等于0.01</p>
 <p>参考资料：<a href="https://developer.apple.com/documentation/uikit/touches_presses_and_gestures/using_responders_and_the_responder_chain_to_handle_events" title="Using Responders and the Responder Chain to Handle Events" target="_blank" rel="noopener">Using Responders and the Responder Chain to Handle Events</a></p>
 
-
-                
-            </div>
-
-            <!-- Comments -->
-            
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    
-
-
-                </div>
-            
-        </div>
-    </div>
+  </div>
 </article>
 
-    <!-- Footer -->
-    <hr />
-
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-2 col-md-offset-1">
-                <ul class="list-inline text-center">
-                    
 
 
-                    
-                        <li>
-                            <a href="https://github.com/aReuuuuu" target="_blank">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x"></i>
-                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </a>
-                        </li>
-                    
-                <!-- </ul> -->
-                <p class="copyright text-muted">&copy; 2019 aReu<br></p>
-                <p class="copyright text-muted">aReuHub 2018. Powered By aReuChen</p>
-                <!-- <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p> --> 
-            </div>
-        </div>
     </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="/Search/">Search</a></li>
+         
+          <li><a href="http://github.com/sergodeeva">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-寻找响应者，通过调用以下方法执行"><span class="toc-number">1.</span> <span class="toc-text">1.寻找响应者，通过调用以下方法执行</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-更改控件响应范围（闲鱼底部tabbar）"><span class="toc-number">1.1.</span> <span class="toc-text">1.更改控件响应范围（闲鱼底部tabbar）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-穿透"><span class="toc-number">1.2.</span> <span class="toc-text">2.穿透</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/09/05/iOS响应链/"><i class="fa fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/09/05/iOS响应链/&text=iOS响应链"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/09/05/iOS响应链/&title=iOS响应链"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/09/05/iOS响应链/&is_video=false&description=iOS响应链"><i class="fa fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=iOS响应链&body=Check out this article: http://yoursite.com/2019/09/05/iOS响应链/"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/09/05/iOS响应链/&title=iOS响应链"><i class="fa fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/09/05/iOS响应链/&title=iOS响应链"><i class="fa fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/09/05/iOS响应链/&title=iOS响应链"><i class="fa fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/09/05/iOS响应链/&title=iOS响应链"><i class="fa fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/09/05/iOS响应链/&name=iOS响应链&description="><i class="fa fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      <ul>
+        <li id="toc"><a class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa fa-list fa-lg" aria-hidden="true"></i> TOC</a></li>
+        <li id="share"><a class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa fa-share-alt fa-lg" aria-hidden="true"></i> Share</a></li>
+        <li id="top" style="display:none"><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a></li>
+        <li id="menu"><a class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa fa-bars fa-lg" aria-hidden="true"></i> Menu</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 aReu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/posts/">Writing</a></li>
+         
+          <li><a href="/Search/">Search</a></li>
+         
+          <li><a href="http://github.com/sergodeeva">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
 </footer>
 
-
-    <!-- After footer scripts -->
-    
-<!-- jQuery -->
-<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-
-<!-- Bootstrap -->
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-<!-- Gallery -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
-
-<!-- Disqus Comments -->
-
-
-
 </body>
-
 </html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="/lib/meslo-LG/styles.css">
+<link rel="stylesheet" href="/lib/justified-gallery/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-37473492-6', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+
+
