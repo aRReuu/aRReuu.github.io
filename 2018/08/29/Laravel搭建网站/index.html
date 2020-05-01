@@ -1,71 +1,138 @@
 <!DOCTYPE html>
-
 <html lang="en">
+
+
+
+
+
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <title>Laravel搭建个人博客 [ Freiheit als Autonomie ]</title>
-  
-    <!-- stylesheets list from config.yml -->
-    
-      <link rel="stylesheet" href="/css/iLiKE.css">
-    
-  
-  
-  
-  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
-    <script id="leancloud">
-      AV.init({
-          appId: "6E5zTbTljdUbVW2WkXPsXGJk-gzGzoHsz",
-          appKey: "0vsyDKfNpeSECAI70J794ugv"
-      });
-    </script>
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content>
+  <meta name="author" content="aReu">
+  <meta name="keywords" content>
+  <title>Laravel搭建个人博客 - Freiheit als Autonomie</title>
 
-</head></html>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
+
+
+  <link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css">
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_fmb4a04yx8h.css">
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_ijqayz9ro8k.css">
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+<!-- 自定义样式保持在最底部 -->
+
+
+</head>
+
+
 <body>
-    <div class="header">
-        <div class="container">
-    <div class="menu">
-      <div class="menu-left">
-        <a href="/">
-          <img src="/favicon.ico"></img>
-        </a>
-      </div>
-      <div class="menu-right">
+  <header style="height: 20vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
           
           
           
-          
-          
-          
-          <a href="/">Home</a>
+          <li class="nav-item">
+            <a class="nav-link" href="/">
+              <i class="iconfont icon-home-fill"></i>
+              Home</a>
+          </li>
         
           
           
           
-          
-          
-          
-          <a href="/archives">Archives</a>
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">
+              <i class="iconfont icon-archive-fill"></i>
+              Archives</a>
+          </li>
         
           
           
           
-          
-          
-          
-          <a href="/about">About</a>
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">
+              <i class="iconfont icon-category-fill"></i>
+              Categories</a>
+          </li>
         
-      </div>
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">
+              <i class="iconfont icon-tags-fill"></i>
+              Tags</a>
+          </li>
+        
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">
+              <i class="iconfont icon-user-fill"></i>
+              About</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
     </div>
-</div>
-    </div>
-    <div class="container">
-        <h1 class="post-title">Laravel搭建个人博客</h1>
-<article class="post markdown-style">
-  <h2 id="本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。"><a href="#本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。" class="headerlink" title="本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。"></a>本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。</h2><p>###环境部署</p>
+  </div>
+</nav>
+
+    <!-- <div class="view intro-2" id="background" parallax=true
+         style="background: #000000 no-repeat center center;
+           background-size: cover;">
+    </div> -->
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <h2 id="本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。"><a href="#本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。" class="headerlink" title="本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。"></a>本文主要记录了一个基于阿里云服务器从0搭建个人博客的过程，也是我第一次使用Laravel编写的项目。下面会简要介绍整个搭建过程。</h2><p>###环境部署</p>
 <ul>
 <li>在阿里云的管理控制台，先在安全组规则内设置常用的80以及(SQL)3306端口为允许状态（因为我申请的的是ECS专有网络，所以网卡类型只有内网），其他如443等端口有需要的可以自行设置。</li>
 <li>安装基本软件，以及必要的PHP，MySQL以及Nginx组件。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line"><span class="comment">//语言包</span></span><br><span class="line">sudo apt-get install -y language-pack-en-base   </span><br><span class="line">locale-gen en_US.UTF<span class="number">-8</span></span><br><span class="line"><span class="comment">//常用软件</span></span><br><span class="line">sudo apt-get install -y vim git zip unzip</span><br></pre></td></tr></table></figure>
@@ -108,158 +175,254 @@
 
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>最初以为服务器的部署只是简单几步就能完成，无非就是搭建个环境和安装一些必要组件，其后再把开发好的代码上传上去就OK了（而且网上也不乏类似的教程和文章）。可是随后才发现这两天的进度真的不尽人意，，先是在ubuntu上部署环境的时候配置不正确，导致了要么是SQL连接不通，要么就是Nginx和php页面指向不正确等一大堆问题，不过最后还是成功搞了出来。下一步打算继续完善这个博客的功能，并且以此记录我今后的学习的一点一滴。</p>
 
-</article>
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Laravel/">Laravel</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Laravel-Blog/">Laravel  Blog</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/09/02/主线程更新UI/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">主线程更新UI</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                  </div>
+                </div>
+              
+            </div>
 
-    <div class="pagenator post-pagenator">
-    
-    
-        <a class="extend prev post-prev" href="/2018/09/02/主线程更新UI/">prev</a>
-    
-
-    
-    <p>last update time 2019-08-29</p>
-    
-    
+            
+          </div>
+        </div>
+      </div>
     </div>
-
-    </div>
-    <div class="footer">
-        <div class="container">
-    <div class="social">
-	<ul class="social-list">
-		
-			
-				
-				
-				<li>
-					<a href="mailto:1178752402@qq.com" title="email" target="_blank">
-					<i class="fa fa-email"></i>
-					</a>
-				</li>
-			
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-		
-			
-				
-				<li>
-					<a href="https://github.com/CaiChenghan" title="github" target="_self">
-					<i class="fa fa-github"></i>
-					</a>
-				</li>
-			
-		
-			
-		
-			
-		
-			
-		
-			
-				
-				<li>
-					<a href="https://www.jianshu.com/u/565c8e790605" title="jianshu" target="_self">
-					<i class="fa fa-jianshu"></i>
-					</a>
-				</li>
-			
-		
-			
-		
-			
-		
-			
-		
-	</ul>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
 </div>
-    <div class="copyright">
-        <span>
-            
-            
-            
-                © aReu 2017 - 2019
-            
-        </span>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  <!-- 
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
-    <div class="power">
-        <span>
-            Powered by <a href="https://hexo.io">Hexo</a> & <a href="https://github.com/CaiChenghan/iLiKE">iLiKE Theme</a>
-        </span>
+  </div>
+</div>
+   -->
+
+  <!--  -->
+
+  <!--  -->
+
+  <!-- <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
     </div>
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-    <!--page counter part-->
-<script>
-function addCount (Counter) {
-    url=$('.article-date').attr('href').trim();
-    title = $('.article-title').text().trim();
-    var query = new AV.Query(Counter);
-    //use url as unique idnetfication
-    query.equalTo("url",url);
-    query.find({
-        success: function(results) {
-            if (results.length>0) {
-                var counter=results[0];
-                counter.fetchWhenSave(true); //get recent result
-                counter.increment("time");
-                counter.save();
-            } else {
-                var newcounter=new Counter();
-                newcounter.set("title",title);
-                newcounter.set("url",url);
-                newcounter.set("time",1);
-                newcounter.save(null,{
-                    success: function(newcounter) {
-                        //alert('New object created');
-                    }, error: function(newcounter,error) {
-                        alert('Failed to create');
-                    }
-                })
-            }
-        },
-        error: function(error) {
-            //find null is not a error
-            alert('Error:'+error.code+" "+error.message);
-        }
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
     });
-}
-$(function() {
-    var Counter=AV.Object.extend("Counter");
-    //only increse visit counting when intering a page
-    if ($('.article-title').length == 1) {
-       addCount(Counter);
+  </script>
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+<!-- Plugins -->
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Laravel搭建个人博客&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
     }
-    var query=new AV.Query(Counter);
-    query.descending("time");
-    // the sum of popular posts
-    query.limit(10); 
-    query.find({
-        success: function(results) {
-                for(var i=0;i<results.length;i++) {
-                    var counter=results[i];
-                    title=counter.get("title");
-                    url=counter.get("url");
-                    time=counter.get("time");
-                    // add to the popularlist widget
-                    showcontent=title+" ("+time+")";
-                    //notice the "" in href
-                    $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
-                }
-            },
-        error: function(error) {
-            alert("Error:"+error.code+" "+error.message);
-        }
-    });
-});
-</script>
-</div>
-    </div>
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
 </body>
 </html>
