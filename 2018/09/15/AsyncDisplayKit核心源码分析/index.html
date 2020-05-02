@@ -16,7 +16,7 @@
   <meta name="description" content>
   <meta name="author" content="aReu">
   <meta name="keywords" content>
-  <title>AsyncDisplayKit核心源码分析 - Freiheit als Autonomie</title>
+  <title>AsyncDisplayKit核心源码分析 - 自省 敬畏</title>
 
   <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css">
@@ -45,7 +45,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>aReu</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -84,24 +84,6 @@
               Categories</a>
           </li>
         
-          
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/tags/">
-              <i class="iconfont icon-tags-fill"></i>
-              Tags</a>
-          </li>
-        
-          
-          
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/about/">
-              <i class="iconfont icon-user-fill"></i>
-              About</a>
-          </li>
-        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
@@ -128,18 +110,71 @@
     <div class="d-none d-lg-block col-lg-2"></div>
     <div class="col-lg-8 nopadding-md">
       <div class="container nopadding-md" id="board-ctn">
+        <h3 class="h3title">AsyncDisplayKit核心源码分析 </h3>
         <div class="py-5" id="board">
           <div class="post-content mx-auto" id="post">
             
             <article class="markdown-body">
               <p>在ASDK中，所有视图控件的基类都是 <code>ASDisplayNode</code>,它是对 <code>UIView</code> 和 <code>CALayer</code> 的抽象，并且允许你对视图进行计算主线程的层次结构，也可以渲染主线程。而最重要的是，这个类是<strong>线程安全</strong>的。当创建一个ASDisplayNode并且添加到当前视图后，view/layer的get方法总是先被调用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#pragma mark - Misc Setter / Getter</span><br><span class="line">- (UIView *)view&#123;</span><br><span class="line">  ...</span><br><span class="line">  if (!_view) &#123;</span><br><span class="line">    [self _loadViewOrLayerIsLayerBacked:NO];</span><br><span class="line">  &#125;</span><br><span class="line">  return _view;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (CALayer *)layer&#123;</span><br><span class="line">  if (!_layer) &#123;</span><br><span class="line">	...</span><br><span class="line">    [self _loadViewOrLayerIsLayerBacked:YES];</span><br><span class="line">  &#125;</span><br><span class="line">  return _layer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">#pragma mark - Misc Setter / Getter
+- (UIView *)view&#123;
+  ...
+  if (!_view) &#123;
+    [self _loadViewOrLayerIsLayerBacked:NO];
+  &#125;
+  return _view;
+&#125;
+
+- (CALayer *)layer&#123;
+  if (!_layer) &#123;
+	...
+    [self _loadViewOrLayerIsLayerBacked:YES];
+  &#125;
+  return _layer;
+&#125;</code></pre>
 
 <p>而它们都会分别调用到<code>- (void)_loadViewOrLayerIsLayerBacked:(BOOL)isLayerBacked</code>这个方法，其中<code>isLayerBacked</code>表示<strong>层处理</strong>，当其值为true时，会放弃对当前View的创建，从而优化性能，节省不必要的渲染时间。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">- (void)_loadViewOrLayerIsLayerBacked:(BOOL)isLayerBacked&#123;</span><br><span class="line">  if (isLayerBacked) &#123;</span><br><span class="line">    TIME_SCOPED(_debugTimeToCreateView);</span><br><span class="line">    _layer = [self _layerToLoad];</span><br><span class="line">    static int ASLayerDelegateAssociationKey;</span><br><span class="line">    ASWeakProxy *instance = [ASWeakProxy weakProxyWithTarget:self];</span><br><span class="line">    _layer.delegate = (id&amp;amp;lt;CALayerDelegate&amp;amp;gt;)instance;</span><br><span class="line">    objc_setAssociatedObject(_layer, &amp;amp;amp;ASLayerDelegateAssociationKey, instance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">    TIME_SCOPED(_debugTimeToCreateView);</span><br><span class="line">    _view = [self _viewToLoad];</span><br><span class="line">    _view.asyncdisplaykit_node = self;</span><br><span class="line">    _layer = _view.layer;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  _layer.asyncdisplaykit_node = self;</span><br><span class="line">  self.asyncLayer.asyncDelegate = self;</span><br><span class="line">  </span><br><span class="line">  &#123;</span><br><span class="line">    TIME_SCOPED(_debugTimeToApplyPendingState);</span><br><span class="line">    [self _applyPendingStateToViewOrLayer];</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#123;</span><br><span class="line">    TIME_SCOPED(_debugTimeToAddSubnodeViews);</span><br><span class="line">    [self _addSubnodeViewsAndLayers];</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  &#123;</span><br><span class="line">    TIME_SCOPED(_debugTimeForDidLoad);</span><br><span class="line">    [self __didLoad];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">- (void)_loadViewOrLayerIsLayerBacked:(BOOL)isLayerBacked&#123;
+  if (isLayerBacked) &#123;
+    TIME_SCOPED(_debugTimeToCreateView);
+    _layer = [self _layerToLoad];
+    static int ASLayerDelegateAssociationKey;
+    ASWeakProxy *instance = [ASWeakProxy weakProxyWithTarget:self];
+    _layer.delegate = (id&amp;amp;lt;CALayerDelegate&amp;amp;gt;)instance;
+    objc_setAssociatedObject(_layer, &amp;amp;amp;ASLayerDelegateAssociationKey, instance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	&#125; else &#123;
+    TIME_SCOPED(_debugTimeToCreateView);
+    _view = [self _viewToLoad];
+    _view.asyncdisplaykit_node = self;
+    _layer = _view.layer;
+  &#125;
+  
+  _layer.asyncdisplaykit_node = self;
+  self.asyncLayer.asyncDelegate = self;
+  
+  &#123;
+    TIME_SCOPED(_debugTimeToApplyPendingState);
+    [self _applyPendingStateToViewOrLayer];
+  &#125;
+  
+  &#123;
+    TIME_SCOPED(_debugTimeToAddSubnodeViews);
+    [self _addSubnodeViewsAndLayers];
+  &#125;
+  
+  &#123;
+    TIME_SCOPED(_debugTimeForDidLoad);
+    [self __didLoad];
+  &#125;
+&#125;</code></pre>
 
 <p>从<code>self.asyncLayer.asyncDelegate = self;</code>可以见到<code>ASDisplayNode</code>成为了<code>_ASDisplayLayer</code>的代理，以管理CALayer的操作。其后，方法内部的<code>_applyPendingStateToViewOrLayer</code>会让layer执行<code>setNeedsDisplay</code>并且标记自身，进行内容的绘制操作。最后在<code>_ASDisplayLayer</code>中实现display方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (void)display&#123;</span><br><span class="line">  ...</span><br><span class="line">  [self display:self.displaysAsynchronously];</span><br><span class="line">     ...</span><br><span class="line">     [strongAsyncDelegate displayAsyncLayer:self asynchronously:asynchronously];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">- (void)display&#123;
+  ...
+  [self display:self.displaysAsynchronously];
+     ...
+     [strongAsyncDelegate displayAsyncLayer:self asynchronously:asynchronously];
+&#125;</code></pre>
 
 <p>接下来也就是最<strong>核心和关键</strong>的部分。所有的优化操作都会在<code>displayAsyncLayer</code>这个方法中实现，其中分为以下三部分：</p>
 <ul>
@@ -148,33 +183,131 @@
 <li>GCD异步并发调度任务</li>
 </ul>
 <p>我们先来看一下精简之后的源码，并分别对内部操作进行一一分析：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">- (void)displayAsyncLayer:(_ASDisplayLayer *)asyncLayer asynchronously:(BOOL)asynchronously&#123;</span><br><span class="line">	...</span><br><span class="line">    asyncdisplaykit_async_transaction_operation_block_t displayBlock = [self _displayBlockWithAsynchronous:asynchronously isCancelledBlock:isCancelledBlock rasterizing:NO];</span><br><span class="line">    // 再绘制执行完成后进行block回调操作，当前回调在主线程上进行</span><br><span class="line"> asyncdisplaykit_async_transaction_operation_completion_block_t completionBlock = ^(id&amp;amp;lt;NSObject&amp;amp;gt; value, BOOL canceled)&#123;</span><br><span class="line">        if (!canceled &amp;amp;amp;&amp;amp;amp; !isCancelledBlock()) &#123;</span><br><span class="line">		...</span><br><span class="line">            if (stretchable) &#123; ASDisplayNodeSetupLayerContentsWithResizableImage(_layer, image);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">			//填充绘制后的视图内容</span><br><span class="line">                _layer.contentsScale = self.contentsScale;</span><br><span class="line">                _layer.contents = (id)image.CGImage;</span><br><span class="line">            &#125;</span><br><span class="line">			...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    if (asynchronously) &#123;</span><br><span class="line">        _ASAsyncTransaction *transaction = containerLayer.asyncdisplaykit_asyncTransaction;</span><br><span class="line">        //将displayBlock以及completion放进添加到事务上，通过GCD异步并发调度所有绘制任务</span><br><span class="line">        [transaction addOperationWithBlock:displayBlock priority:self.drawingPriority queue:[_ASDisplayLayer displayQueue] completion:completionBlock];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        UIImage *contents = (UIImage *)displayBlock();</span><br><span class="line">        completionBlock(contents, NO);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">- (void)displayAsyncLayer:(_ASDisplayLayer *)asyncLayer asynchronously:(BOOL)asynchronously&#123;
+	...
+    asyncdisplaykit_async_transaction_operation_block_t displayBlock = [self _displayBlockWithAsynchronous:asynchronously isCancelledBlock:isCancelledBlock rasterizing:NO];
+    // 再绘制执行完成后进行block回调操作，当前回调在主线程上进行
+ asyncdisplaykit_async_transaction_operation_completion_block_t completionBlock = ^(id&amp;amp;lt;NSObject&amp;amp;gt; value, BOOL canceled)&#123;
+        if (!canceled &amp;amp;amp;&amp;amp;amp; !isCancelledBlock()) &#123;
+		...
+            if (stretchable) &#123; ASDisplayNodeSetupLayerContentsWithResizableImage(_layer, image);
+            &#125; else &#123;
+			//填充绘制后的视图内容
+                _layer.contentsScale = self.contentsScale;
+                _layer.contents = (id)image.CGImage;
+            &#125;
+			...
+        &#125;
+    &#125;;
+
+    if (asynchronously) &#123;
+        _ASAsyncTransaction *transaction = containerLayer.asyncdisplaykit_asyncTransaction;
+        //将displayBlock以及completion放进添加到事务上，通过GCD异步并发调度所有绘制任务
+        [transaction addOperationWithBlock:displayBlock priority:self.drawingPriority queue:[_ASDisplayLayer displayQueue] completion:completionBlock];
+    &#125; else &#123;
+        UIImage *contents = (UIImage *)displayBlock();
+        completionBlock(contents, NO);
+    &#125;
+&#125;</code></pre>
 
 <p>1.<strong>任务displayBlock的构建</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asyncdisplaykit_async_transaction_operation_block_t displayBlock = [self _displayBlockWithAsynchronous:asynchronously isCancelledBlock:isCancelledBlock rasterizing:NO];</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">asyncdisplaykit_async_transaction_operation_block_t displayBlock = [self _displayBlockWithAsynchronous:asynchronously isCancelledBlock:isCancelledBlock rasterizing:NO];</code></pre>
 
 <p>这里构建了<code>asyncdisplaykit_async_transaction_operation_block_t</code>类型的displayBlock，是一个用以在委托上调用绘制并返回视图内容进行显示的模块封装，其内部为<strong>光栅化</strong>以及<strong>内容绘制</strong>的实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">if (shouldBeginRasterizing) &#123;</span><br><span class="line">    //递归子视图进行光栅化操作</span><br><span class="line">    [self _recursivelyRasterizeSelfAndSublayersWithIsCancelledBlock:isCancelledBlock displayBlocks:displayBlocks];</span><br><span class="line">&#125;</span><br><span class="line">	...</span><br><span class="line">    //构建displayBlock绘制操作</span><br><span class="line">	displayBlock = ^id&#123;</span><br><span class="line">      CHECK_CANCELLED_AND_RETURN_NIL();</span><br><span class="line">      UIGraphicsBeginImageContextWithOptions(bounds.size, opaque, contentsScaleForDisplay);</span><br><span class="line">		...</span><br><span class="line">      for (dispatch_block_t block in displayBlocks) &#123;</span><br><span class="line">        block();</span><br><span class="line">      &#125;</span><br><span class="line">	  ...</span><br><span class="line">      UIImage *image = UIGraphicsGetImageFromCurrentImageContext();</span><br><span class="line">      UIGraphicsEndImageContext();</span><br><span class="line">      ASDN_DELAY_FOR_DISPLAY();</span><br><span class="line">      return image;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">if (shouldBeginRasterizing) &#123;
+    //递归子视图进行光栅化操作
+    [self _recursivelyRasterizeSelfAndSublayersWithIsCancelledBlock:isCancelledBlock displayBlocks:displayBlocks];
+&#125;
+	...
+    //构建displayBlock绘制操作
+	displayBlock = ^id&#123;
+      CHECK_CANCELLED_AND_RETURN_NIL();
+      UIGraphicsBeginImageContextWithOptions(bounds.size, opaque, contentsScaleForDisplay);
+		...
+      for (dispatch_block_t block in displayBlocks) &#123;
+        block();
+      &#125;
+	  ...
+      UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+      UIGraphicsEndImageContext();
+      ASDN_DELAY_FOR_DISPLAY();
+      return image;
+    &#125;;</code></pre>
 
 <p>代码继续往下走，其中当判断<code>asynchronously</code>为false时，当前封装好的绘制任务<code>displayBlock</code>将会被同步执行，然后执行<code>completionBlock</code>回调，更新layer所显示的内容。否则的话，block会被封装成一个事务，添加到队列中执行，再执行异步绘制操作。</p>
 <p>2.<strong>建立管理绘制事务</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">_ASAsyncTransaction *transaction = containerLayer.asyncdisplaykit_asyncTransaction;</span><br><span class="line">//实现</span><br><span class="line">- (_ASAsyncTransaction *)asyncdisplaykit_asyncTransaction&#123;</span><br><span class="line">	...</span><br><span class="line">    if (transaction == nil) &#123;</span><br><span class="line">        NSHashTable *transactions = self.asyncdisplaykit_asyncLayerTransactions;</span><br><span class="line">        if (transactions == nil) &#123;</span><br><span class="line">            transactions = [NSHashTable hashTableWithOptions:NSPointerFunctionsObjectPointerPersonality];</span><br><span class="line">            self.asyncdisplaykit_asyncLayerTransactions = transactions;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">        [transactions addObject:transaction];</span><br><span class="line">        self.asyncdisplaykit_currentAsyncTransaction = transaction;</span><br><span class="line">    &#125;</span><br><span class="line">    [[_ASAsyncTransactionGroup mainTransactionGroup] addTransactionContainer:self];</span><br><span class="line">    return transaction;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">_ASAsyncTransaction *transaction = containerLayer.asyncdisplaykit_asyncTransaction;
+//实现
+- (_ASAsyncTransaction *)asyncdisplaykit_asyncTransaction&#123;
+	...
+    if (transaction == nil) &#123;
+        NSHashTable *transactions = self.asyncdisplaykit_asyncLayerTransactions;
+        if (transactions == nil) &#123;
+            transactions = [NSHashTable hashTableWithOptions:NSPointerFunctionsObjectPointerPersonality];
+            self.asyncdisplaykit_asyncLayerTransactions = transactions;
+        &#125;
+        ...
+        [transactions addObject:transaction];
+        self.asyncdisplaykit_currentAsyncTransaction = transaction;
+    &#125;
+    [[_ASAsyncTransactionGroup mainTransactionGroup] addTransactionContainer:self];
+    return transaction;
+&#125;</code></pre>
 
 <p>对于上述语句，创建了transaction任务并且添加到<code>_ASAsyncTransactionGroup</code>中进行管理，<code>_ASAsyncTransactionGroup</code> 会在初始化时，创建了，向 Runloop 中注册监听事件，当Runloop 在将要进入休眠与结束期间，提交 displayBlock执行的结果。</p>
 <p>3.<strong>异步并发地派发绘制事务并马上执行内容绘制</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[transaction addOperationWithBlock:displayBlock priority:self.drawingPriority queue:[_ASDisplayLayer displayQueue] completion:completionBlock];</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">[transaction addOperationWithBlock:displayBlock priority:self.drawingPriority queue:[_ASDisplayLayer displayQueue] completion:completionBlock];</code></pre>
 
 <p>首先<code>[_ASDisplayLayer displayQueue]</code>队列的优先级别为<code>DISPATCH_QUEUE_PRIORITY_HIGH</code>,也就是说为了<strong>优先处理好UI渲染</strong>过程。期间内部进行如下处理：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ASDisplayNodeAsyncTransactionOperation *operation = [[ASDisplayNodeAsyncTransactionOperation alloc] initWithOperationCompletionBlock:completion];</span><br><span class="line"> [_operations addObject:operation];</span><br><span class="line"> _group-&amp;amp;gt;schedule(priority, queue, ^&#123;</span><br><span class="line">   @autoreleasepool &#123;</span><br><span class="line">     operation.value = block();</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">ASDisplayNodeAsyncTransactionOperation *operation = [[ASDisplayNodeAsyncTransactionOperation alloc] initWithOperationCompletionBlock:completion];
+ [_operations addObject:operation];
+ _group-&amp;amp;gt;schedule(priority, queue, ^&#123;
+   @autoreleasepool &#123;
+     operation.value = block();
+   &#125;
+ &#125;);</code></pre>
 
 <p><code>schedule</code>方法采取C++形式对GCD进行了封装,同时添加一些最大并发数、线程锁的功能，最后执行<code>operation._block();</code>操作，回调处理<code>operation.value = block();</code>将<code>displayBlock</code>的绘制任务实现并赋值给<code>ASDisplayNodeAsyncTransactionOperation</code>的实例<code>operation.value</code>.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void ASAsyncTransactionQueue::GroupImpl::schedule(NSInteger priority, dispatch_queue_t queue, dispatch_block_t block)&#123;</span><br><span class="line">	dispatch_async(queue, ^&#123;</span><br><span class="line">     ...</span><br><span class="line">      while (!entry._operationQueue.empty()) &#123;</span><br><span class="line">        ...</span><br><span class="line">        if (operation._block) &#123;</span><br><span class="line">          ASProfilingSignpostStart(3, operation._block);</span><br><span class="line">          operation._block();</span><br><span class="line">          ASProfilingSignpostEnd(3, operation._block);</span><br><span class="line">        &#125;</span><br><span class="line">        operation._group-&amp;amp;gt;leave();</span><br><span class="line">        operation._block = nil; // the block must be freed while mutex is unlocked</span><br><span class="line">        lock.lock();</span><br><span class="line">      &#125;</span><br><span class="line">	  ...</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">void ASAsyncTransactionQueue::GroupImpl::schedule(NSInteger priority, dispatch_queue_t queue, dispatch_block_t block)&#123;
+	dispatch_async(queue, ^&#123;
+     ...
+      while (!entry._operationQueue.empty()) &#123;
+        ...
+        if (operation._block) &#123;
+          ASProfilingSignpostStart(3, operation._block);
+          operation._block();
+          ASProfilingSignpostEnd(3, operation._block);
+        &#125;
+        operation._group-&amp;amp;gt;leave();
+        operation._block = nil; // the block must be freed while mutex is unlocked
+        lock.lock();
+      &#125;
+	  ...
+    &#125;);
+&#125;</code></pre>
 
 <p>这个时候，虽然异步处理视图操作已经实现，但是并没有马上显示在界面上。而是当Runloop 在将要进入休眠与结束期间，已经注册了回调的管理事务类<code>_ASAsyncTransactionGroup</code>将会接收到通知，对每个<code>_ASAsyncTransaction</code>事务进行<code>commit</code>提交操作，把封装了的displayBlock回传，实现<code>completionBlock()</code>,使layer获取到绘制内容并呈现到显示屏上。下面将会用调用栈进行解释：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-[_transactionGroupRunLoopObserverCallback]</span><br><span class="line">	-[_ASAsyncTransactionGroup commit]</span><br><span class="line"> 		-[_ASAsyncTransaction commit]</span><br><span class="line"> 		-[_ASAsyncTransaction completeTransaction]</span><br><span class="line">			-[ASAsyncTransactionOperation callAndReleaseCompletionBlock]</span><br><span class="line">				_operationCompletionBlock(self.value, canceled);</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">-[_transactionGroupRunLoopObserverCallback]
+	-[_ASAsyncTransactionGroup commit]
+ 		-[_ASAsyncTransaction commit]
+ 		-[_ASAsyncTransaction completeTransaction]
+			-[ASAsyncTransactionOperation callAndReleaseCompletionBlock]
+				_operationCompletionBlock(self.value, canceled);</code></pre>
 
 <p>最后，当异步绘制任务完成后，block会在<strong>主线程</strong>中回调到<code>- (void)displayAsyncLayer:(_ASDisplayLayer *)asyncLayer asynchronously:(BOOL)asynchronously</code>方法里的<code>completionBlock</code>实现中，并将内容复制给<code>_layer</code>的<code>contents</code>属性。至此，ASDK的整个绘制视图并显示的界面上的过程就结束了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">asyncdisplaykit_async_transaction_operation_completion_block_t completionBlock = ^(id&amp;amp;lt;NSObject&amp;amp;gt; value, BOOL canceled)&#123;</span><br><span class="line">    ASDisplayNodeCAssertMainThread();</span><br><span class="line">    if (!canceled &amp;amp;amp;&amp;amp;amp; !isCancelledBlock()) &#123;</span><br><span class="line">      UIImage *image = (UIImage *)value;</span><br><span class="line">      BOOL stretchable = (NO == UIEdgeInsetsEqualToEdgeInsets(image.capInsets, UIEdgeInsetsZero));</span><br><span class="line">      if (stretchable) &#123; ASDisplayNodeSetupLayerContentsWithResizableImage(_layer, image);</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        _layer.contentsScale = self.contentsScale;</span><br><span class="line">        _layer.contents = (id)image.CGImage;</span><br><span class="line">      &#125;</span><br><span class="line">      [self didDisplayAsyncLayer:self.asyncLayer];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs undefined">asyncdisplaykit_async_transaction_operation_completion_block_t completionBlock = ^(id&amp;amp;lt;NSObject&amp;amp;gt; value, BOOL canceled)&#123;
+    ASDisplayNodeCAssertMainThread();
+    if (!canceled &amp;amp;amp;&amp;amp;amp; !isCancelledBlock()) &#123;
+      UIImage *image = (UIImage *)value;
+      BOOL stretchable = (NO == UIEdgeInsetsEqualToEdgeInsets(image.capInsets, UIEdgeInsetsZero));
+      if (stretchable) &#123; ASDisplayNodeSetupLayerContentsWithResizableImage(_layer, image);
+      &#125; else &#123;
+        _layer.contentsScale = self.contentsScale;
+        _layer.contents = (id)image.CGImage;
+      &#125;
+      [self didDisplayAsyncLayer:self.asyncLayer];
+    &#125;
+  &#125;;</code></pre>
 
 <p>####总结<br>AsyncDisplayKit为了保持界面流畅性，整个过程做了三大部分的处理：<br>1.利用<strong>UIGraphics实现视图绘制</strong>以及进行<strong>rasterize光栅化处理</strong>，并且将实现封装在<strong>displayBlock</strong>块中。<br>2.建立绘制事务的<strong>管理</strong>，对需要处理的<strong>displayBlock</strong>进行容器封装，涉及到的类分别是<code>_ASAsyncTransactionGroup</code>、<code>_ASAsyncTransactionContainer</code> 以及 <code>_ASAsyncTransaction</code>。期间<code>_ASAsyncTransactionGroup</code>注册Runloop监听事件，并且在每一次Runloop将要进入休眠及结束时<strong>commit</strong>已绘制完成的任务，让<strong>_layer</strong>视图进行完成赋值并更新的操作。<br>3.利用GCD异步并发调用所有绘制事务，从而减轻主线程负担。</p>
 <p><strong>引用</strong><br>[《iOS 保持界面流畅的技巧》](<a href="https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/#43" target="_blank" rel="noopener">https://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/#43</a> &amp;quot;iOS 保持界面流畅的技巧&amp;quot;)<br>[提升界面渲染性能](<a href="https://zhuanlan.zhihu.com/p/22255533?refer=iOS-Source-Code" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/22255533?refer=iOS-Source-Code</a> &amp;quot;提升界面渲染性能&amp;quot;)</p>
@@ -252,7 +385,7 @@
     
   </main>
 
-  <!-- 
+  
     <a id="scroll-top-button" href="#" role="button">
       <i class="iconfont icon-arrowup" aria-hidden="true"></i>
     </a>
@@ -280,159 +413,32 @@
     </div>
   </div>
 </div>
-   -->
-
-  <!--  -->
-
-  <!--  -->
-
-  <!-- <footer class="mt-5">
-  <div class="text-center py-3">
-    <div>
-      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
-      <i class="iconfont icon-love"></i>
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
-        <span>Fluid</span></a>
-    </div>
-    
-
-    
-
-    
-  </div>
-</footer>
-
-<!-- SCRIPTS -->
-<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
-<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
-<script  src="/js/main.js" ></script>
-
-
-  <script  src="/js/lazyload.js" ></script>
-
-
+   
 
   
-  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
-  <script>
-    $(document).ready(function () {
-      var boardCtn = $('#board-ctn');
-      var boardTop = boardCtn.offset().top;
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
+<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
+<script type="text/javascript">
+  var oldLoadAp = window.onload;
+  window.onload = function () {
+    oldLoadAp && oldLoadAp();
 
-      tocbot.init({
-        tocSelector: '#tocbot',
-        contentSelector: '.post-content',
-        headingSelector: 'h1,h2,h3,h4,h5,h6',
-        linkClass: 'tocbot-link',
-        activeLinkClass: 'tocbot-active-link',
-        listClass: 'tocbot-list',
-        isCollapsedClass: 'tocbot-is-collapsed',
-        collapsibleClass: 'tocbot-is-collapsible',
-        collapseDepth: 0,
-        scrollSmooth: true,
-        headingsOffset: -boardTop
-      });
-      if ($('.toc-list-item').length > 0) {
-        $('#toc').css('visibility', 'visible');
-      }
+    new APlayer({
+      container: document.getElementById('aplayer'),
+      fixed: true,
+      autoplay: 'false' === 'true',
+      loop: 'all',
+      order: 'random',
+      theme: '#b7daff',
+      preload: 'none',
+      audio: [{"name":"name","artist":"artist","url":"/songs/test.mp3","cover":"/img/cover.jpg"},{"name":"name","artist":"artist","url":"https://...url.mp3","cover":"https://...cover.jpg"}]
     });
-  </script>
+  }
+</script>
 
+  
 
-
-
-
-  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
-  <script  src="/js/clipboard-use.js" ></script>
-
-
-
-
-
-
-<!-- Plugins -->
-
-
-
-  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
-  <script>
-    var typed = new Typed('#subtitle', {
-      strings: [
-        '  ',
-        "AsyncDisplayKit核心源码分析&nbsp;",
-      ],
-      cursorChar: "_",
-      typeSpeed: 70,
-      loop: false,
-    });
-    typed.stop();
-    $(document).ready(function () {
-      $(".typed-cursor").addClass("h2");
-      typed.start();
-    });
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
-  <script>
-    anchors.options = {
-      placement: "right",
-      visible: "hover",
-      
-    };
-    var el = "h1,h2,h3,h4,h5,h6".split(",");
-    var res = [];
-    for (item of el) {
-      res.push(".markdown-body > " + item)
-    }
-    anchors.add(res.join(", "))
-  </script>
-
-
-
-  <script  src="/js/local-search.js" ></script>
-  <script>
-    var path = "/local-search.xml";
-    var inputArea = document.querySelector("#local-search-input");
-    inputArea.onclick = function () {
-      searchFunc(path, 'local-search-input', 'local-search-result');
-      this.onclick = null
-    }
-  </script>
-
-
-
-  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
-  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <script>
-    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
-      function () {
-        var element = document.createElement('a');
-        $(element).attr('data-fancybox', 'images');
-        $(element).attr('href', $(this).attr('src'));
-        $(this).wrap(element);
-      }
-    );
-  </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- -->
-
+  
 </body>
 </html>
