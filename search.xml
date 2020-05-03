@@ -4,25 +4,18 @@
   
     
     <entry>
-      <title>音视频总结</title>
-      <link href="/2019/09/10/%E9%9F%B3%E8%A7%86%E9%A2%91%E6%80%BB%E7%BB%93/"/>
-      <url>/2019/09/10/%E9%9F%B3%E8%A7%86%E9%A2%91%E6%80%BB%E7%BB%93/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>AOP设计模式总结</title>
       <link href="/2019/09/06/AOP%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/"/>
       <url>/2019/09/06/AOP%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/</url>
       
         <content type="html"><![CDATA[<p>#AOP设计模式总结</p><h5 id="AOP-Aspect-Oriented-Programming-面向切面编程"><a href="#AOP-Aspect-Oriented-Programming-面向切面编程" class="headerlink" title="AOP: Aspect Oriented Programming 面向切面编程"></a>AOP: Aspect Oriented Programming 面向切面编程</h5><p>######它是一种在不修改源码的情况下，引入新增功能的模式</p><h5 id="SEL"><a href="#SEL" class="headerlink" title="SEL"></a>SEL</h5><p>######类方法的指针</p><h5 id="IMP"><a href="#IMP" class="headerlink" title="IMP"></a>IMP</h5><p>######函数指针</p><p>####AOP优势</p><ul><li>对业务逻辑进行适当分离</li><li>提高复用率，降低耦合</li></ul><p>####场景<br>数据埋点，日志记录，hook底层实现或更改方法返回值</p>]]></content>
       
+      
+      <categories>
+          
+          <category> iOS </category>
+          
+      </categories>
       
       
         <tags>
@@ -52,7 +45,7 @@
       
         <tags>
             
-            <tag> Responder-CHain  iOS </tag>
+            <tag> iOS </tag>
             
         </tags>
       
@@ -70,14 +63,14 @@
       
       <categories>
           
-          <category> 其他 </category>
+          <category> Other </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 其它 </tag>
+            <tag> Other </tag>
             
         </tags>
       
@@ -127,7 +120,7 @@
       
         <tags>
             
-            <tag> iOS 线程 </tag>
+            <tag> iOS </tag>
             
         </tags>
       
@@ -136,7 +129,7 @@
     
     
     <entry>
-      <title>Laravel搭建个人博客</title>
+      <title>Laravel搭建博客</title>
       <link href="/2018/08/29/Laravel%E6%90%AD%E5%BB%BA%E7%BD%91%E7%AB%99/"/>
       <url>/2018/08/29/Laravel%E6%90%AD%E5%BB%BA%E7%BD%91%E7%AB%99/</url>
       
@@ -145,14 +138,14 @@
       
       <categories>
           
-          <category> Laravel </category>
+          <category> Other </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Laravel  Blog </tag>
+            <tag> Other </tag>
             
         </tags>
       
