@@ -11,6 +11,12 @@
     <content type="html"><![CDATA[<ul><li><p>标签attribute</p><ul><li><p><code>ref</code>给子组件或元素注册引用信息，引用信息将会注册在父组件的 <code>$refs</code> 对象上。能在逻辑代码中间接获取被引用的组件。</p><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"uinput"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span>methods: &#123;  focus: function () &#123;// 用来从父级组件聚焦输入框    this.$refs.input.focus()  &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre></li><li><p><code>required</code>对应标签的值不能为空。</p></li></ul></li><li><p><code>v-model</code></p></li></ul>]]></content>
     
     
+    <categories>
+      
+      <category>Web</category>
+      
+    </categories>
+    
     
     <tags>
       
