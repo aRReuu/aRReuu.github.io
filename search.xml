@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Vue日记</title>
+      <link href="/2020/05/07/Vue%E6%97%A5%E8%AE%B0/"/>
+      <url>/2020/05/07/Vue%E6%97%A5%E8%AE%B0/</url>
+      
+        <content type="html"><![CDATA[<ul><li><p>标签attribute</p><ul><li><p><code>ref</code>给子组件或元素注册引用信息，引用信息将会注册在父组件的 <code>$refs</code> 对象上。能在逻辑代码中间接获取被引用的组件。</p><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">"uinput"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span>methods: &#123;  focus: function () &#123;// 用来从父级组件聚焦输入框    this.$refs.input.focus()  &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre></li><li><p><code>required</code>对应标签的值不能为空。</p></li></ul></li><li><p><code>v-model</code></p></li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>AOP设计模式总结</title>
       <link href="/2019/09/06/AOP%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/"/>
       <url>/2019/09/06/AOP%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93/</url>
